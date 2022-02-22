@@ -1,0 +1,17 @@
+{
+    "name": "aldif/laravel-storage",
+    "description": "Best Practice Laravel Storage",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Aldif\\LaravelStorage\\": "packages/FauzanAldi/laravel-storage/src/"
+        }
+    },
+    "authors": [{
+        "name": "Fauzan Aldi",
+        "email": "aldifauzan085@gmail.com"
+    }],
+    "require": {
+        "intervention/image": "^2.7"
+    }
+}
