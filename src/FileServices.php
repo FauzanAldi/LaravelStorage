@@ -13,13 +13,13 @@ class FileServices
 
 	
 
-	public static function fileImage($slug, $ext, $prefix, $width=50, $height=300)
+	public static function fileImage($slug, $ext, $prefix, $width=300, $height=300)
 	{   
         
-        $ext_allowed = array("png", "jpg", "jpeg");
+        $ext_allowed = array("png", "jpg", "jpeg","gif","jfif");
         
         
-        return FileServices::ReadFileImage($slug, $ext, $prefix, $ext_allowed, 'image/jpg', $width, $height);
+        return FileServices::ReadFileImage($slug, $ext, $prefix, $ext_allowed, 'image/png', $width, $height);
     }
 
     public static function filePDF($slug, $ext, $prefix)
@@ -27,7 +27,7 @@ class FileServices
         $ext_allowed = array("pdf");
         
         // dd('a');
-        return $this->ReadFile($slug, $ext, $prefix, $ext_allowed, 'application/pdf');
+        return FileServices::ReadFile($slug, $ext, $prefix, $ext_allowed, 'application/pdf');
     }
 
 
@@ -36,7 +36,7 @@ class FileServices
         // $ext_allowed = array("pdf");
         
         // dd('a');
-        return $this->DownloadFile($slug, $ext, $prefix, $ext_allowed);
+        return FileServices::DownloadFile($slug, $ext, $prefix, $ext_allowed);
     }
 
     public static function ReadFile($slug, $ext, $prefix, $ext_allowed, $contenttype){
@@ -74,9 +74,9 @@ public static function ReadFileImage($slug, $ext, $prefix, $ext_allowed, $conten
             if (Storage::disk('local')->exists($prefix.'/'.$slug.'.'.$ext)) {
                 // dd(storage_path('app/'.$prefix.'/'.$slug.'.'.$ext));
                 // $image = Storage::get($prefix.'/'.$slug.'.'.$ext);
-                $image = Image::make(storage_path('app/'.$prefix.'/'.$slug.'.'.$ext))->resize($width, $height);
+                $image = Image::make(storage_path('app/'.$prefix.'/'.$slug.'.'.$ext))->resize($width, $height, function ($constraint) { $constraint->aspectRatio(); });
                 // dd($image);
-                return $image->response('jpg');
+                return $image->response('png');
                 // return response()->make($image, 200, ['content-type' => $contenttype]);
             }else{
                 abort(404);
