@@ -4,7 +4,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Aldif\\LaravelStorage\\": "packages/FauzanAldi/laravel-storage/src/"
+            "Aldif\\LaravelStorage\\": "src/"
         }
     },
     "authors": [{
