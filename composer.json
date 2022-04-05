@@ -12,6 +12,7 @@
         "email": "aldifauzan085@gmail.com"
     }],
     "require": {
-        "intervention/image": "^2.7"
+        "intervention/image": "^2.7",
+        "intervention/imagecache": "^2.5"
     }
 }

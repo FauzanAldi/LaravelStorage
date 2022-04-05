@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Http;
 use File;
 use Image;
 use Illuminate\Support\Facades\Storage;
+use Response;
 
 
 class FileServices 
@@ -74,9 +75,13 @@ public static function ReadFileImage($slug, $ext, $prefix, $ext_allowed, $conten
             if (Storage::disk('local')->exists($prefix.'/'.$slug.'.'.$ext)) {
                 // dd(storage_path('app/'.$prefix.'/'.$slug.'.'.$ext));
                 // $image = Storage::get($prefix.'/'.$slug.'.'.$ext);
-                $image = Image::make(storage_path('app/'.$prefix.'/'.$slug.'.'.$ext))->resize($width, $height, function ($constraint) { $constraint->aspectRatio(); });
+                // $image = Image::make(storage_path('app/'.$prefix.'/'.$slug.'.'.$ext))->resize($width, $height, function ($constraint) { $constraint->aspectRatio(); })->greyscale();;
+                $img = Image::cache(function($image) use($slug, $ext, $prefix, $width, $height) {
+                    $image->make(storage_path('app/'.$prefix.'/'.$slug.'.'.$ext))->resize($width, $height, function ($constraint) { $constraint->aspectRatio(); })->greyscale();
+                 }, 10, true);
+                
                 // dd($image);
-                return $image->response('png');
+                return $img->response('png');
                 // return response()->make($image, 200, ['content-type' => $contenttype]);
             }else{
                 abort(404);
