@@ -77,8 +77,8 @@ public static function ReadFileImage($slug, $ext, $prefix, $ext_allowed, $conten
                 // $image = Storage::get($prefix.'/'.$slug.'.'.$ext);
                 // $image = Image::make(storage_path('app/'.$prefix.'/'.$slug.'.'.$ext))->resize($width, $height, function ($constraint) { $constraint->aspectRatio(); })->greyscale();;
                 $img = Image::cache(function($image) use($slug, $ext, $prefix, $width, $height) {
-                    $image->make(storage_path('app/'.$prefix.'/'.$slug.'.'.$ext))->resize($width, $height, function ($constraint) { $constraint->aspectRatio(); })->greyscale();
-                 }, 10, true);
+                    $image->make(storage_path('app/'.$prefix.'/'.$slug.'.'.$ext))->resize($width, $height, function ($constraint) { $constraint->aspectRatio(); });
+                }, 10, true);
                 
                 // dd($image);
                 return $img->response('png');
